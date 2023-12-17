@@ -12,13 +12,20 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity
 @TableGenerator(
 	name = "MEMBER_SEQ_GENERATOR",
@@ -36,5 +43,7 @@ public class Member extends BaseEntity {
 	private Address address;
 
 	@OneToMany(mappedBy = "member")
+	@Builder.Default
 	private List<Order> orders = new ArrayList<>();
 }
+

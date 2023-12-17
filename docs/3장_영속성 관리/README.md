@@ -20,7 +20,7 @@
     - 팩토리 객체에서 엔티티 매니저를 생성하는 비용은 거의 들지 않는다.
     - 쓰레드 세이프합니다. 단, 엔티티 매니저는 쓰레드 세이프하지 않으므로 공유하면 안됩니다.
 
-![img.png](img.png)
+![img.png](img/img.png)
 
 - 하나의 엔티티 매니저 팩토리가 다수의 엔티티 매니저를 생성합니다.
 - EntityManager1은 데이터베이스 연결을 하고 있지 않습니다. 엔티티 매니저는 계속 연결을 하지 않고 있다가 데이터베이스 연결
@@ -48,7 +48,7 @@ em.persist(member);
 - [준영속(detached)](#준영속) : 영속성 컨텍스트에 저장되었다가 분리된 상태
 - [삭제(removed)](#삭제) : 삭제된 상태
 
-![img_1.png](img_1.png)
+![img_1.png](img/img_1.png)
 
 ### 비영속
 
@@ -63,7 +63,7 @@ member.setUsername("회원1");
 
 - member 엔티티 객체는 객체는 생성하였지만 영속성 컨텍스트에 저장되지 않아 비영속 상태입니다.
 
-![img_2.png](img_2.png)
+![img_2.png](img/img_2.png)
 
 - 위 그림은 em.persist() 호출전의 비영속 상태인 member 엔티티 객체를 나타냅니다.
 
@@ -73,7 +73,7 @@ member.setUsername("회원1");
 - 엔티티 매니저를 통하여 엔티티 객체를 영속성 컨텍스트에 저장하게 되면 영속 상태가 됩니다.
 - em.find(), JPQL을 사용해서 **조회한 엔티티도 영속성 컨텍스트가 관리하는 영속 상태**입니다.
 
-![img_3.png](img_3.png)
+![img_3.png](img/img_3.png)
 
 ### 준영속
 
@@ -124,7 +124,7 @@ em.persist(member);
 - 위 코드 실행시 1차 캐시에 회원 엔티티를 저장합니다.
 - 회원 엔티티는 아직 데이터베이스에 저장되지 않은 상태입니다.
 
-![img_4.png](img_4.png)
+![img_4.png](img/img_4.png)
 
 #### 1차 캐시에서 조회
 
@@ -142,7 +142,7 @@ em.persist(member);
 Member findMember = em.find(Member.class, “member1”)
 ```
 
-![img_5.png](img_5.png)
+![img_5.png](img/img_5.png)
 
 - em.find()를 호출하여 우선적으로 1차 캐시에서 식별자 값으로 엔티티를 탐색합니다.
 - 찾는 엔티티가 있으면 데이터베이스를 조회하지 않고 **메모리에 있는 1차 캐시에서 엔티티를 조회**합니다.
@@ -151,7 +151,7 @@ Member findMember = em.find(Member.class, “member1”)
 
 찾고자 하는 엔티티가 1차 캐시에 없어서 데이터베이서 조회하는 경우
 
-![img_6.png](img_6.png)
+![img_6.png](img/img_6.png)
 
 1. em.find(Member.class, "member2")를 실행합니다.
 2. member2가 1차 캐시에 없으므로 DB에 조회합니다.
@@ -198,7 +198,7 @@ transaction.commit();
 - 트랜잭션을 커밋할때 저장해둔 쿼리를 데이터베이스에 보냅니다. 이것을 **트랜잭션을 지원하는 쓰기 지연(transactional write-behind)** 라고 합니다.
 
 위 코드에 대한 과정을 그림으로 표현하면 다음과 같습니다.
-![img_7.png](img_7.png)
+![img_7.png](img/img_7.png)
 
 1. memberA를 영속화 시킵니다.
 2. 영속성 컨텍스트는 1차 캐시에 회원 엔티티를 저장하면서 동시에 회원 엔티티 정보로 등록 쿼리를 만듭니다.
@@ -206,7 +206,7 @@ transaction.commit();
 
 memberB 엔티티 객체를 대상으로 다시 persist(memberB)를 수행합니다.
 
-![img_8.png](img_8.png)
+![img_8.png](img/img_8.png)
 
 1. memberB를 영속화 시킵니다.
 2. 영속성 컨텍스트는 1차 캐시에 memberB 엔티티를 저장하면서 동시에 memberB 엔티티 객체에 대한 정보로 등록 쿼리를 만듭니다.
@@ -214,7 +214,7 @@ memberB 엔티티 객체를 대상으로 다시 persist(memberB)를 수행합니
 
 다음은 엔티티 매니저가 commit()을 수행합니다.
 
-![img_10.png](img_10.png)
+![img_10.png](img/img_10.png)
 
 - 트랜잭션을 커밋하면 엔티티 매니저는 영속성 컨텍스트에 플러시합니다.
 - 플러시(flush)란? : 영속성 컨텍스트의 변경 내용을 데이터베이스에 동기화하는 작업
@@ -241,7 +241,7 @@ commit(); //트랜잭션 커밋
    그리고 트랜잭션을 커밋할 때 모아둔 등록 쿼리를 데이터베이스에 보낸 후에 커밋합니다.
 
 위 두 경우를 그림으로 표현하면 다음과 같을 것입니다.
-![img_11.png](img_11.png)
+![img_11.png](img/img_11.png)
 
 - 위 두가지 경우 모두 트랜잭션 범위 안에서 실행되므로 둘의 결과는 같습니다.
 - A,B,C 모두 트랜잭션을 커밋하면 함께 저장되고 롤백하면 함께 저장되지 않습니다.
@@ -324,7 +324,7 @@ transaction.commit();
 
 #### 변경감지 동작과정
 
-![img_12.png](img_12.png)
+![img_12.png](img/img_12.png)
 
 1. 트랜잭션을 커밋하면 엔티티 매니저 내부에서 먼저 플러시(flsuh())가 호출됩니다.
 2. 엔티티와 스냅샷을 비교해서 변경된 엔티티를 찾습니다.
@@ -488,9 +488,9 @@ public class EntityTest {
 - 영속성 컨텍스트의 쓰기 지연 SQL 저장소에 있는 INSERT SQL도 사라집니다.
 
 위 예제의 과정을 그림으로 표현하면 다음과 같습니다.
-![img_13.png](img_13.png)
+![img_13.png](img/img_13.png)
 
-![img_14.png](img_14.png)
+![img_14.png](img/img_14.png)
 
 ### 6.2.영속성 컨텍스트 초기화: clear()
 
@@ -519,9 +519,9 @@ public class EntityTest {
 }
 ```
 
-![img_15.png](img_15.png)
+![img_15.png](img/img_15.png)
 
-![img_16.png](img_16.png)
+![img_16.png](img/img_16.png)
 
 - em.clear() 호출 후 영속성 컨텍스트 안에 모든 것이 초기화됩니다.
 - memberA, memberB는 준영속 상태가 됩니다.
@@ -554,9 +554,9 @@ public class EntityTest {
 
 위 코드를 그림으로 표현하면 다음과 같습니다.
 
-![img_17.png](img_17.png)
+![img_17.png](img/img_17.png)
 
-![img_18.png](img_18.png)
+![img_18.png](img/img_18.png)
 
 ### 6.4.준영속 상태의 특징
 
@@ -637,7 +637,7 @@ public class EntityTest {
 
 merge 동작과정을 그림으로 표현하면 다음과 같습니다.
 
-![img_19.png](img_19.png)
+![img_19.png](img/img_19.png)
 
 1. merge()를 실행합니다.
 2. 파라미터로 넘어온 준영속 엔티티의 식별자 값으로 1차 캐시에서 엔티티를 조회합니다.

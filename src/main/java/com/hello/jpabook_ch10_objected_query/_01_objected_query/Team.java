@@ -32,6 +32,7 @@ public class Team {
 
 	@OneToMany
 	@JoinColumn(name = "TEAM_ID") // Member 테이블의 TEAM_ID (FK)
+	@Builder.Default
 	private List<Member> members = new ArrayList<>();
 
 	public void addMember(Member member) {

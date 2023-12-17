@@ -340,6 +340,287 @@ String jpql = "SELECT distinct t FROM Team t JOIN FETCH t.members WHERE t.name =
 - 정리하면 페치 조인과 일반 조인의 차이는 페치 조인은 지연 로딩을 사용하지 않고, 일반 조인은 지연 로딩을 사용할 수 있습니다.
 
 ## 2.8 경로 표현식
+경로 표현식은 점(.)을 찍어서 객체를 탐색하는 것입니다.
+```
+select m.username
+from Member m
+    join m.team t
+    join m.orders o
+where t.name = '팀A';
+```
+- 회원 중 팀 이름이 '팀A'인 회원들의 이름을 탐색합니다.
+
+**경로 표현식 종류**
+- 상태 필드 경로 탐색
+- 단일 값 연관 경로 탐색
+- 컬렉션 값 연관 경로 탐색
+
+**상태 필드 경로 탐색**
+객체가 가지고 있는 멤버를 바로 탐색하는 방법입니다.
+```
+select m.username, m.age
+from Member m
+```
+- 회원 객체가 가지고 있는 username과 age를 바로 탐색하여 출력합니다.
+
+**단일 값 연관 경로 탐색**
+단일 값 연관 경로 탐색이란 다쪽의 객체에서 일쪽의 객체로 객체 탐색하는 것입니다.
+
+예를 들어 주문(Order) 객체에서 연관 경로를 탐색하여 회원(Member)을 탐색합니다.
+```
+select m.*
+from Orders o
+  inner join Member m on o.member_id = m.id
+```
+- o.member를 통해서 주문에서 회원으로 경로를 탐색하였습니다.
+
+회원과 같이 일 쪽으로 경로 탐색을 하게 되면 SQL에서 내부 조인이 일어나는데 이것을 **묵시적 조인**이라 한다. 묵시적 조인은 경로 표현식에 의해서 묵시적으로 조인됩니다. 단, INNER JOIN만 할 수 있습니다.
+
+**컬렉션 값 연관 경로 탐색**
+일 쪽의 객체에서 다쪽의 컬렉션을 탐색하는 것이다. 하지만, 다쪽의 컬렉션의 상태 필드를 바로 참조할 수 는 없습니다.
+
+```
+select t.members from Team t; // 성공
+select t.members.username from Team t; // 실패
+```
+- 일쪽인 Team 객체에서 members 컬렉션을 참조하여 출력하는 것은 가능합니다.
+- 하지만 members 컬렉션의 username을 참조하는 것은 불가능합니다.
+
+만약 컬렉션 값의 상태 필드를 경로 탐색하고 싶으면 다음 코드처럼 조인을 사용해서 새로운 별칭을 얻어야 합니다.
+```
+select m.username from Team t join t.members m;
+```
+- 별칭 m부터 다시 시작하여 경로 탐색을 할 수 있습니다.
+
+일쪽의 객체에서 컬렉션 값을 참조시 컬렉션의 크기를 구하기 위해서 size를 호출하면 됩니다.
+```
+select t.members.size from Team t;
+```
+- size 사용시 COUNT 함수를 사용하는 SQL로 변환됩니다.
+
+### 경로 탐색시 묵시적 조인시 주의사항
+- 묵시적 조인은 항상 내부 조인입니다. 내부 조인으로 인하여 두 테이블간에 값이 있는 데이터만 출력합니다.
+- 컬렉션에서 경로 탐색을 계속 하려면 JOIN 해서 별칭을 얻어서 해야 합니다.
+  - `select m.username from Team t join t.members m;`
+- 경로 탐색은 주로 SELECT, WHERE 절에 사용하지만 묵시적 조인으로 인해서 SQL의 FROM 절에 영향을 준다.
+
+
+## 2.9 서브 쿼리
+JPQL도 SQL처럼 서브 쿼리를 지원합니다. 
+단, 서브쿼리를 where, having 절에서만 사용할 수 있고 select, from 절에서는 사용할 수 없습니다.
+
+예시1) 나이가 평균보다 많은 회원을 탐색합니다.
+```
+select m
+from Member m
+where m.age > (select avg(m2.age) from Member m2)
+```
+
+예시2) 최소 한건이라도 주문한 고객을 탐색합니다.
+```
+select m
+from Member m
+where (select count(o) from Order o where m = o.member) > 0
+
+or
+
+select m
+from Member m
+where m.orders.size > 0
+```
+
+### 서브 쿼리 함수
+- [NOT] EXISTS (subquery)
+- {ALL | ANY | SOME} (subquery)
+- [NOT] IN (subquery)
+
+#### EXISTS
+EXISTS 함수는 서브 쿼리에 결과가 존재하면 참입니다. NOT을 붙이면 결과가 반대가 됩니다.
+
+예시) 팀 A 소속인 회원을 탐색합니다.
+```
+select m
+from Member m
+where exists (select t from m.team t where t.name = '팀A')
+```
+
+예시) 팀 A 소속이 아닌 회원을 탐색합니다.
+```
+select m
+from Member m
+where not exists (select t from m.team t where t.name = '팀A')
+```
+
+#### {ALL | ANY | SOME}
+- ALL : 모든 조건을 만족하면 결과가 참이 됩니다.
+- ANY | SOME : 모든 조건중 하나라도 만족하면 결과가 참이 됩니다.
+
+예시) 전체 상품 각각의 재고보다 주문량이 많은 주문들을 검색하세오
+```
+select o
+from Order o
+where o.orderAmount > all (select p.stockAmount from Product p)
+```
+
+예시) 어떤 팀이든 팀에 소속된 회원을 검색하세오.
+```
+select m
+from Member m
+where m.team = any (select t from Team t)
+```
+
+#### IN
+서브쿼리의 결과 중 하나라도 같은 것이 있으면 참이 됩니다.
+
+예시) 20세 이상을 보유한 팀을 검색하세요.
+```
+select t
+from Team t
+where t in (select t2 from Team t2 join t2.members m2 where m2.age >= 20)
+```
+
+## 2.10 조건식
+### Between IN, Like, NULL 비교
+#### Between
+- A와 B 사이의 값이면 참입니다.
+
+예시) 나이가 10~20인 회원을 찾아라
+```
+select m
+from Member m
+where m.age between 10 and 20
+```
+
+#### IN
+- X와 같은 값이 예제에 하나라도 있으면 참입니다.
+
+예시) 이름이 회원1이나 회원2인 회원을 찾아라
+```
+select m
+from Member m
+where m.username in ('회원1', '회원2')
+```
+
+#### Like
+- 패턴에 맞는 데이터가 있다면 참입니다.
+- %(퍼센트) : 아무 값들이 입력되어 된다. (값이 없어도됨)
+- _(언더라인) : 한 글자는 아무 값이 입력되어도 되지만 값이 있어야 한다
+
+예시) 중간에 원이라는 단어가 들어간 회원을 찾아라 (강원미, 강원, 원미)
+```
+select m
+from Member m
+where m.username like '%원%'
+```
+
+예시) 이름이 회원으로 시작하는 회원을 찾아라 (회원1, 회원ABC)
+```
+select m
+from Member m
+where m.username like '회원%'
+```
+
+예시) 이름이 회원으로 끝나는 회원을 찾아라 (좋은 회원, A회원)
+```
+select m
+from Member m
+where m.username like '%회원'
+```
+
+예시) 이름이 회원으로 시작하고 그 다음 한글자로 끝나는 회원을 찾아라 (회원A, 회원1)
+```
+select m
+from Member m
+where m.username like '회원_'
+```
+
+예시) 이름이 총 길이가 3이고 3으로 끝나는 회원을 찾아라 (회원3)
+```
+select m
+from Member m
+where m.username like '__3'
+```
+
+예시) 이름이 회원%인 회원을 찾아라 (회원%)
+```
+select m
+from Member m
+where m.username like '회원\%' ESCAPE '\'
+```
+
+#### NULL
+입력값이 NULL인지 검사합니다. NULL 비교시 '=' 연산자가 아닌 IS NULL을 사용하여야 합니다.
+
+예시) 회원의 이름이 null인 회원을 찾아라
+```
+select m
+from Member m
+where m.username is null
+```
+
+### 컬렉션 식
+컬렉션 식은 컬렉션에만 사용할 수 있는 기능입니다.
+
+#### 빈 컬렉션 비교 식 (EMPTY)
+EMPTY는 컬렉션이 비어있으면 참입니다.
+
+예시) 주문이 하나라도 있는 회원을 조회하라
+```
+select m
+from Member m
+where m.orders is not empty
+
+// 실행된 SQL
+select m.*
+from Member m
+where exists (
+  select o.id
+  from Orders o
+  where m.id = o.member_id
+)
+```
+
+#### 컬렉션의 멤버 식
+엔티티나 값이 컬렉션에 포함되어 있으면 참입니다.
+
+예시) 입력받은 memberParam이 컬렉션에 포함되어 있는 팀을 조회하시오.
+```
+select t
+from Team t
+where :memberParam member of t.members
+```
+
+### 스칼라 식
+스칼라는 숫자, 문자, 날짜, case, 엔티티 타입 같은 가장 기본적인 타입들을 말한다.
+
+#### 문자함수
+- CONCAT
+- SUBSTRING
+- TRIM
+- LOWER
+- UPPER
+- LENGTH
+- LOCATE
+
+#### 수학함수
+- ABS
+- SQRT
+- MOD
+- SIZE
+- INDEX
+
+#### 날짜함수
+- CURRENT_DATE
+- CURRENT_TIME
+- CURRENT_TIMESTAMP
+
+```
+select current_date, current_time, current_timestamp from Team t
+// 2013-08-19, 23:38:17, 2013-08-19 23:38:17
+```
+
+
+
 
 
 
