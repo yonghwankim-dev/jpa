@@ -1,7 +1,4 @@
-package com.ch13.class02.step01;
-
-import java.util.List;
-import java.util.stream.Collectors;
+package com.ch13.class02.step02;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -10,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnitUtil;
 import javax.persistence.Table;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -23,18 +22,19 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Table(name = "orders")
 @Getter
-@ToString
+@ToString(exclude = {"member"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER) // 즉시 로딩 전략
+	@ManyToOne(fetch = FetchType.LAZY) // 즉시 로딩 전략
 	private Member member;
 
 	@Builder
@@ -51,38 +51,18 @@ class OrderController{
 	private OrderService orderService;
 
 	public String view(Long orderId){
-		Order order = orderService.findOne(orderId);
+		Order order = orderService.fineOrder(orderId);
 		Member member = order.getMember();
-		return member.getName(); // 이미 로딩된 엔티티
-	}
-
-	public List<String> viewAll(){
-		List<Order> orders = orderService.findAll();
-		return orders.stream()
-			.map(Order::getMember)
-			.map(Member::getName)
-			.collect(Collectors.toList());
-	}
-
-	public List<String> viewAllUsingFetchJoin(){
-		List<Order> orders = orderService.findAllUsingFetchJoin();
-		return orders.stream()
-			.map(Order::getMember)
-			.map(Member::getName)
-			.collect(Collectors.toList());
+		return member.getName();
 	}
 }
 
+@Slf4j
 @Service
 class OrderService{
 
 	@Autowired
 	private OrderRepository orderRepository;
-
-	@Transactional(readOnly = true)
-	public Order findOne(Long orderId) {
-		return orderRepository.findOne(orderId);
-	}
 
 	@Transactional
 	public Order save(Order order){
@@ -90,13 +70,13 @@ class OrderService{
 	}
 
 	@Transactional(readOnly = true)
-	public List<Order> findAll() {
-		return orderRepository.findAll();
-	}
+	public Order fineOrder(Long id){
+		Order order = orderRepository.findOrder(id);
+		log.info("order : {}", order);
+		Member member = order.getMember(); // 초기화되지 않은 단순 프록시 객체 반환
+		member.getName(); // 프록시 객체를 강제로 초기화한다
 
-	@Transactional(readOnly = true)
-	public List<Order> findAllUsingFetchJoin(){
-		return orderRepository.findAllUsingFetchJoin();
+		return order;
 	}
 }
 
@@ -105,23 +85,12 @@ class OrderRepository{
 	@PersistenceContext
 	private EntityManager em;
 
-	public Order findOne(Long orderId) {
-		return em.find(Order.class, orderId);
-	}
-
-	public Order save(Order order){
+	public Order save(Order order) {
 		em.persist(order);
 		return order;
 	}
 
-	public List<Order> findAll() {
-		return em.createQuery("select o from Order o", Order.class)
-			.getResultList();
-	}
-
-	// 페치 조인을 사용
-	public List<Order> findAllUsingFetchJoin(){
-		return em.createQuery("select o from Order o join fetch o.member", Order.class)
-			.getResultList();
+	public Order findOrder(Long id) {
+		return em.find(Order.class, id);
 	}
 }

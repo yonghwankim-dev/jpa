@@ -1,4 +1,4 @@
-package com.ch13.class02.step01;
+package com.ch13.class02.step02;
 
 import java.util.List;
 
@@ -10,9 +10,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @Transactional이 없으면 트랜잭션 범위가 없게 되므로 데이터베이스에서 가져오는 엔티티들은 준영속 상태가 된다
+ * 준영속 상태에서 지연 로딩 시도시 예외가 발생한다
+ *
+ * 서비스 레이어에 @Transactional이 존재하고 스프링 OSIV가 활성화되어 있으면
+ * 컨트롤러나 뷰 레이어까지도 엔티티는 영속 상태이기 때문에 지연 로딩이 가능하다.
+ * 하지만, 데이터 수정시에는 반영되지 않는다. 왜냐하면 영속성 컨텍스트가 Presentation 레이어에서 종료되면
+ * 플러시하지 않기 때문이다.
+ */
 @Slf4j
 @SpringBootApplication
-public class GlobalFetchStrategyExample01 implements ApplicationRunner {
+public class GlobalFetchStrategyExample02 implements ApplicationRunner {
 
 	@Autowired
 	private MemberService memberService;
@@ -36,26 +45,11 @@ public class GlobalFetchStrategyExample01 implements ApplicationRunner {
 			.build());
 		log.info("order 초기화 완료, order={}", order);
 
-		String memberName = orderController.view(order.getId());
-		log.info("memberName is {}", memberName);
-
-		Member member2 = memberService.save(Member.builder()
-			.name("강감찬")
-			.build());
-		log.info("member2 초기와 완료, member2={}", member2);
-		Order order2 = orderService.save(Order.builder()
-			.member(member2)
-			.build());
-		log.info("order2 초기화 완료, order2={}", order2);
-
-		List<String> memberNames = orderController.viewAll();
-		log.info("memberNames is {}", memberNames);
-
-		List<String> memberNames2 = orderController.viewAllUsingFetchJoin();
-		log.info("memberNames2 is {}", memberNames2);
+		String memberName1 = orderController.view(order.getId());
+		log.info("memberName1 = {}", memberName1);
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(GlobalFetchStrategyExample01.class, args);
+		SpringApplication.run(GlobalFetchStrategyExample02.class, args);
 	}
 }

@@ -1,6 +1,4 @@
-package com.ch13.class02.step01;
-
-import java.util.List;
+package com.ch13.class02.step03;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -12,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication
-public class GlobalFetchStrategyExample01 implements ApplicationRunner {
+public class GlobalFetchStrategyExample03 implements ApplicationRunner {
 
 	@Autowired
 	private MemberService memberService;
@@ -36,26 +34,11 @@ public class GlobalFetchStrategyExample01 implements ApplicationRunner {
 			.build());
 		log.info("order 초기화 완료, order={}", order);
 
-		String memberName = orderController.view(order.getId());
-		log.info("memberName is {}", memberName);
-
-		Member member2 = memberService.save(Member.builder()
-			.name("강감찬")
-			.build());
-		log.info("member2 초기와 완료, member2={}", member2);
-		Order order2 = orderService.save(Order.builder()
-			.member(member2)
-			.build());
-		log.info("order2 초기화 완료, order2={}", order2);
-
-		List<String> memberNames = orderController.viewAll();
-		log.info("memberNames is {}", memberNames);
-
-		List<String> memberNames2 = orderController.viewAllUsingFetchJoin();
-		log.info("memberNames2 is {}", memberNames2);
+		String memberName1 = orderController.view(order.getId());
+		log.info("memberName1 = {}", memberName1);
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(GlobalFetchStrategyExample01.class, args);
+		SpringApplication.run(GlobalFetchStrategyExample03.class, args);
 	}
 }
