@@ -1,42 +1,40 @@
-package com.ch14.class04;
+package com.ch14.class04.step01;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@ToString
 @Entity
-public class Member {
+public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "member_id")
+	@Column(name = "category_id")
 	private Long id;
 
 	@Column(nullable = false)
 	private String name;
 
-	@Embedded
-	private Address address;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_id")
+	private Category parent;
 
-	@OneToMany(mappedBy = "member")
-	@Builder.Default
-	private List<Order> orders = new ArrayList<>();
+	@OneToMany(mappedBy = "parent")
+	private List<Category> child = new ArrayList<>();
 }

@@ -1,4 +1,4 @@
-package com.ch14.class04;
+package com.ch14.class04.step02;
 
 import javax.persistence.Embeddable;
 

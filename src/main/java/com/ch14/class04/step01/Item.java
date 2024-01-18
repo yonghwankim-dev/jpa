@@ -1,4 +1,4 @@
-package com.ch14.class04;
+package com.ch14.class04.step01;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-
-import org.hibernate.collection.internal.PersistentList;
 
 import lombok.AccessLevel;
 import lombok.Getter;
