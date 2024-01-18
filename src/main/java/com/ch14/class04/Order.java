@@ -16,21 +16,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.hello.jpabook_practice.model.entity.Delivery;
-import com.hello.jpabook_practice.model.entity.OrderItem;
-
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@NamedEntityGraph(name = "Order.withMember", attributeNodes = {
+	@NamedAttributeNode("member")
+})
 @Getter
+@ToString(exclude = {"member", "orderItems", "delivery"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -44,13 +52,13 @@ public class Order {
 	private Member member;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@Builder.Default
 	private List<OrderItem> orderItems = new ArrayList<>();
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "delivery_id")
 	private Delivery delivery;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime orderDate;
 
 	@Enumerated(EnumType.STRING)

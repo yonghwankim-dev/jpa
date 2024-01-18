@@ -11,6 +11,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Getter
+@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @Entity
 public class Member {
 	@Id
@@ -25,5 +37,6 @@ public class Member {
 	private Address address;
 
 	@OneToMany(mappedBy = "member")
+	@Builder.Default
 	private List<Order> orders = new ArrayList<>();
 }

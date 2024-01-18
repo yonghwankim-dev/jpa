@@ -12,11 +12,15 @@ import javax.persistence.OneToOne;
 import com.hello.jpabook_practice.model.entity.DeliveryStatus;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @Entity
 public class Delivery {
 	@Id
