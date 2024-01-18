@@ -1,4 +1,4 @@
-package com.ch14.class03.step3;
+package com.ch14.class03.step03;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
