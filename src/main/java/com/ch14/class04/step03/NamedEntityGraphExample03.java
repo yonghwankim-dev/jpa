@@ -55,6 +55,14 @@ public class NamedEntityGraphExample03 implements ApplicationRunner {
 
 		List<Order> orders2 = orderService.findOrderWithAllUsingJPQLWithInnerJoin(saveOrder.getId());
 		System.out.println(orders2);
+
+		Order findOrder = orderService.findOrderWithMemberUsingDynamicEntityGraph(
+			saveOrder.getId());
+		System.out.println(findOrder);
+
+		Order findOrder2 = orderService.findOrderWithMemberAndItemUsingDynamicEntityGraphAndSubGraph(
+			saveOrder.getId());
+		System.out.println(findOrder2);
 	}
 
 	public static void main(String[] args) {
