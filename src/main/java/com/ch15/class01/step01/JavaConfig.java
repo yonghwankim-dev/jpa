@@ -1,4 +1,4 @@
-package com.ch15.step01;
+package com.ch15.class01.step01;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
