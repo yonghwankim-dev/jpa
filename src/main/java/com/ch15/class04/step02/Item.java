@@ -1,4 +1,4 @@
-package com.ch15.class04;
+package com.ch15.class04.step02;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
