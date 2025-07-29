@@ -6,7 +6,7 @@
         <class>com.jpabook.member.Member</class>
         <class>com.jpabook.board.Board</class>
         <class>com.jpabook.member.Member2</class>
-        <class>com.jpabook_ch6_relationship_mapping.many_to_many.oneway.Product</class>
+        <class>com.ch6.many_to_many.oneway.Product</class>
 
         <properties>
             <!-- 필수 속성 -->
@@ -65,8 +65,8 @@
     </persistence-unit>
     <persistence-unit name="jpabook_one_to_many_oneway">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch6_relationship_mapping.one_to_many.oneway.Member</class>
-        <class>com.jpabook_ch6_relationship_mapping.one_to_many.oneway.Team</class>
+        <class>com.ch6.one_to_many.oneway.Member</class>
+        <class>com.ch6.one_to_many.oneway.Team</class>
 
         <properties>
             <!-- 필수 속성 -->
@@ -95,8 +95,8 @@
     </persistence-unit>
     <persistence-unit name="jpabook_many_to_many_oneway">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch6_relationship_mapping.many_to_many.oneway.Product</class>
-        <class>com.jpabook_ch6_relationship_mapping.many_to_many.oneway.Member</class>
+        <class>com.ch6.many_to_many.oneway.Product</class>
+        <class>com.ch6.many_to_many.oneway.Member</class>
 
         <properties>
             <!-- 필수 속성 -->
@@ -125,8 +125,8 @@
     </persistence-unit>
     <persistence-unit name="jpabook_many_to_many_twoway">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch6_relationship_mapping.many_to_many.twoway.Product</class>
-        <class>com.jpabook_ch6_relationship_mapping.many_to_many.twoway.Member</class>
+        <class>com.ch6.many_to_many.twoway.Product</class>
+        <class>com.ch6.many_to_many.twoway.Member</class>
 
         <properties>
             <!-- 필수 속성 -->
@@ -155,19 +155,19 @@
     </persistence-unit>
     <persistence-unit name="jpabook_many_to_many_twoway_connection_entity">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch6_relationship_mapping.many_to_many.twoway_connection_entity.Member
+        <class>com.ch6.many_to_many.twoway_connection_entity.Member
         </class>
         <class>
-            com.jpabook_ch6_relationship_mapping.many_to_many.twoway_connection_entity.Product
+            com.ch6.many_to_many.twoway_connection_entity.Product
         </class>
         <class>
-            com.jpabook_ch6_relationship_mapping.many_to_many.twoway_connection_entity.MemberProduct
+            com.ch6.many_to_many.twoway_connection_entity.MemberProduct
         </class>
         <class>
-            com.jpabook_ch6_relationship_mapping.many_to_many.twoway_connection_entity.MemberProductId
+            com.ch6.many_to_many.twoway_connection_entity.MemberProductId
         </class>
         <class>
-            com.jpabook_ch6_relationship_mapping.many_to_many.twoway_connection_entity.Order
+            com.ch6.many_to_many.twoway_connection_entity.Order
         </class>
         <properties>
             <!-- 필수 속성 -->
@@ -196,13 +196,13 @@
     </persistence-unit>
     <persistence-unit name="jpabook_join_strategy">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch7_adavanced_mapping._01_join_strategy.Item
+        <class>com.ch7._01_join_strategy.Item
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._01_join_strategy.Album
+        <class>com.ch7._01_join_strategy.Album
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._01_join_strategy.Book
+        <class>com.ch7._01_join_strategy.Book
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._01_join_strategy.Movie
+        <class>com.ch7._01_join_strategy.Movie
         </class>
 
         <properties>
@@ -233,13 +233,13 @@
     <persistence-unit name="jpabook_combination_key_non_identity_relation_mapping">
         <!-- 엔티티 클래스 -->
         <class>
-            com.jpabook_ch7_adavanced_mapping._05_combination_key_non_identity_relation_mapping.idclass.Parent
+            com.ch7._05_combination_key_non_identity_relation_mapping.idclass.Parent
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._05_combination_key_non_identity_relation_mapping.idclass.ParentId
+            com.ch7._05_combination_key_non_identity_relation_mapping.idclass.ParentId
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._05_combination_key_non_identity_relation_mapping.idclass.Child
+            com.ch7._05_combination_key_non_identity_relation_mapping.idclass.Child
         </class>
         <properties>
             <!-- 필수 속성 -->
@@ -269,13 +269,13 @@
     <persistence-unit name="jpabook_combination_key_non_identity_relation_mapping_embedded_id">
         <!-- 엔티티 클래스 -->
         <class>
-            com.jpabook_ch7_adavanced_mapping._05_combination_key_non_identity_relation_mapping.embeddedid.Parent
+            com.ch7._05_combination_key_non_identity_relation_mapping.embeddedid.Parent
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._05_combination_key_non_identity_relation_mapping.embeddedid.ParentId
+            com.ch7._05_combination_key_non_identity_relation_mapping.embeddedid.ParentId
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._05_combination_key_non_identity_relation_mapping.embeddedid.Child
+            com.ch7._05_combination_key_non_identity_relation_mapping.embeddedid.Child
         </class>
         <properties>
             <!-- 필수 속성 -->
@@ -305,19 +305,19 @@
     <persistence-unit name="jpabook_combination_key_identity_relation_mapping_idclass">
         <!-- 엔티티 클래스 -->
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.idclass.Parent
+            com.ch7._06_combination_key_identity_relation_mapping.idclass.Parent
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.idclass.Child
+            com.ch7._06_combination_key_identity_relation_mapping.idclass.Child
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.idclass.ChildId
+            com.ch7._06_combination_key_identity_relation_mapping.idclass.ChildId
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.idclass.GrandChild
+            com.ch7._06_combination_key_identity_relation_mapping.idclass.GrandChild
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.idclass.GrandChildId
+            com.ch7._06_combination_key_identity_relation_mapping.idclass.GrandChildId
         </class>
 
         <properties>
@@ -348,19 +348,19 @@
     <persistence-unit name="jpabook_combination_key_identity_relation_mapping_embeddedid">
         <!-- 엔티티 클래스 -->
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.embeddedid.Parent
+            com.ch7._06_combination_key_identity_relation_mapping.embeddedid.Parent
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.embeddedid.Child
+            com.ch7._06_combination_key_identity_relation_mapping.embeddedid.Child
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.embeddedid.ChildId
+            com.ch7._06_combination_key_identity_relation_mapping.embeddedid.ChildId
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.embeddedid.GrandChild
+            com.ch7._06_combination_key_identity_relation_mapping.embeddedid.GrandChild
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._06_combination_key_identity_relation_mapping.embeddedid.GrandChildId
+            com.ch7._06_combination_key_identity_relation_mapping.embeddedid.GrandChildId
         </class>
 
         <properties>
@@ -390,11 +390,11 @@
     </persistence-unit>
     <persistence-unit name="jpabook_non_identity_relation_mapping">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch7_adavanced_mapping._07_non_identity_relation_mapping.Parent
+        <class>com.ch7._07_non_identity_relation_mapping.Parent
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._07_non_identity_relation_mapping.Child
+        <class>com.ch7._07_non_identity_relation_mapping.Child
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._07_non_identity_relation_mapping.GrandChild
+        <class>com.ch7._07_non_identity_relation_mapping.GrandChild
         </class>
 
         <properties>
@@ -424,10 +424,10 @@
     </persistence-unit>
     <persistence-unit name="jpabook_one_to_one_identity_relation_mapping">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch7_adavanced_mapping._08_one_to_one_identity_relation_mapping.Board
+        <class>com.ch7._08_one_to_one_identity_relation_mapping.Board
         </class>
         <class>
-            com.jpabook_ch7_adavanced_mapping._08_one_to_one_identity_relation_mapping.BoardDetail
+            com.ch7._08_one_to_one_identity_relation_mapping.BoardDetail
         </class>
 
         <properties>
@@ -457,9 +457,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_join_table_one_to_one">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.one_to_one.Parent
+        <class>com.ch7._09_join_table.one_to_one.Parent
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.one_to_one.Child
+        <class>com.ch7._09_join_table.one_to_one.Child
         </class>
 
         <properties>
@@ -489,9 +489,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_join_table_one_to_many">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.one_to_many.Parent
+        <class>com.ch7._09_join_table.one_to_many.Parent
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.one_to_many.Child
+        <class>com.ch7._09_join_table.one_to_many.Child
         </class>
 
         <properties>
@@ -521,9 +521,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_join_table_many_to_one">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.many_to_one.Parent
+        <class>com.ch7._09_join_table.many_to_one.Parent
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.many_to_one.Child
+        <class>com.ch7._09_join_table.many_to_one.Child
         </class>
 
         <properties>
@@ -553,9 +553,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_join_table_many_to_many">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.many_to_many.Parent
+        <class>com.ch7._09_join_table.many_to_many.Parent
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.many_to_many.Child
+        <class>com.ch7._09_join_table.many_to_many.Child
         </class>
 
         <properties>
@@ -585,9 +585,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_secondary_table">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch7_adavanced_mapping._10_secondary_table.Board
+        <class>com.ch7._10_secondary_table.Board
         </class>
-        <class>com.jpabook_ch7_adavanced_mapping._09_join_table.many_to_many.Child
+        <class>com.ch7._09_join_table.many_to_many.Child
         </class>
 
         <properties>
@@ -617,9 +617,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_proxy">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch8_proxy.proxy.Member
+        <class>com.ch8.proxy.Member
         </class>
-        <class>com.jpabook_ch8_proxy.proxy.Team
+        <class>com.ch8.proxy.Team
         </class>
 
 
@@ -650,9 +650,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_practice_eager_loading">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch8_proxy.eager_loading.Member
+        <class>com.ch8.eager_loading.Member
         </class>
-        <class>com.jpabook_ch8_proxy.eager_loading.Team
+        <class>com.ch8.eager_loading.Team
         </class>
 
 
@@ -683,9 +683,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_proxy_lazy_loading">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch8_proxy.lazy_loading.Member
+        <class>com.ch8.lazy_loading.Member
         </class>
-        <class>com.jpabook_ch8_proxy.lazy_loading.Team
+        <class>com.ch8.lazy_loading.Team
         </class>
 
 
@@ -716,11 +716,11 @@
     </persistence-unit>
     <persistence-unit name="jpabook_proxy_lazy_loading_uses">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch8_proxy.lazy_loading_uses.Member
+        <class>com.ch8.lazy_loading_uses.Member
         </class>
-        <class>com.jpabook_ch8_proxy.lazy_loading_uses.Team
+        <class>com.ch8.lazy_loading_uses.Team
         </class>
-        <class>com.jpabook_ch8_proxy.lazy_loading_uses.Order
+        <class>com.ch8.lazy_loading_uses.Order
         </class>
 
         <properties>
@@ -750,9 +750,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_proxy_cascade">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch8_proxy.cascade.Parent
+        <class>com.ch8.cascade.Parent
         </class>
-        <class>com.jpabook_ch8_proxy.cascade.Child
+        <class>com.ch8.cascade.Child
         </class>
 
         <properties>
@@ -782,9 +782,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_proxy_orphan_removal">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch8_proxy.orphan_removal.Parent
+        <class>com.ch8.orphan_removal.Parent
         </class>
-        <class>com.jpabook_ch8_proxy.orphan_removal.Child
+        <class>com.ch8.orphan_removal.Child
         </class>
 
         <properties>
@@ -814,9 +814,9 @@
     </persistence-unit>
     <persistence-unit name="jpabook_value_type_collection">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch9_value_type._03_value_type_collection.Member
+        <class>com.ch9._03_value_type_collection.Member
         </class>
-        <class>com.jpabook_ch9_value_type._03_value_type_collection.Address
+        <class>com.ch9._03_value_type_collection.Address
         </class>
 
         <properties>
@@ -846,25 +846,25 @@
     </persistence-unit>
     <persistence-unit name="jpabook_objected_query">
         <!-- 엔티티 클래스 -->
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Member
+        <class>com.ch10._01_objected_query.Member
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Team
+        <class>com.ch10._01_objected_query.Team
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Product
+        <class>com.ch10._01_objected_query.Product
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Orders
+        <class>com.ch10._01_objected_query.Orders
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Item
+        <class>com.ch10._01_objected_query.Item
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Album
+        <class>com.ch10._01_objected_query.Album
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Book
+        <class>com.ch10._01_objected_query.Book
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Movie
+        <class>com.ch10._01_objected_query.Movie
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.Category
+        <class>com.ch10._01_objected_query.Category
         </class>
-        <class>com.jpabook_ch10_objected_query._01_objected_query.CategoryItem
+        <class>com.ch10._01_objected_query.CategoryItem
         </class>
         <properties>
             <!-- 필수 속성 -->
