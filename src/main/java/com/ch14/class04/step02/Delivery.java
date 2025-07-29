@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import com.hello.jpabook_practice.model.entity.DeliveryStatus;
+import com.jpabook_practice.model.entity.DeliveryStatus;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

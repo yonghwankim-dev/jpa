@@ -9,7 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.hello.jpabook_practice.model.entity.DeliveryStatus;
+import com.jpabook_practice.model.entity.DeliveryStatus;
 
 @SpringBootApplication
 public class NamedEntityGraphExample03 implements ApplicationRunner {
