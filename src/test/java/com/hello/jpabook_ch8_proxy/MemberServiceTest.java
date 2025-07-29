@@ -70,6 +70,7 @@ class MemberServiceTest {
 		SoftAssertions assertions = new SoftAssertions();
 		assertions.assertThat(findMember.getUsername()).isEqualTo("김용환");
 		assertions.assertAll();
+		transaction.rollback();
 	}
 
 	@Test

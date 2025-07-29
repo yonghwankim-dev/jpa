@@ -70,5 +70,6 @@ class MemberTest {
 		// then
 		SoftAssertions assertions = new SoftAssertions();
 		assertions.assertThat(findMember.getProducts()).contains(product);
+		transaction.rollback();
 	}
 }

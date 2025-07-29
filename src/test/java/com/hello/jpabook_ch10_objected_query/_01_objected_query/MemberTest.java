@@ -85,6 +85,7 @@ class MemberTest {
 		em.createQuery("delete from Product").executeUpdate();
 		em.createQuery("delete from Member").executeUpdate();
 		em.createQuery("delete from Team").executeUpdate();
+		em.createQuery("delete from Item").executeUpdate();
 		transaction.commit();
 	}
 

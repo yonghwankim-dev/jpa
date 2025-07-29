@@ -52,5 +52,7 @@ class GrandChildTest {
 		assertions.assertThat(findChild.getName()).isEqualTo("child");
 		assertions.assertThat(findGrandChild.getChild()).isEqualTo(child);
 		assertions.assertThat(findGrandChild.getName()).isEqualTo("grandChild");
+
+		transaction.rollback();
 	}
 }
